@@ -1,28 +1,33 @@
 <script setup>
 import { ref } from 'vue';
 import { my_project_backend } from 'declarations/my_project_backend/index';
-let greeting = ref('');
+let chat = ref('');
 
 async function handleSubmit(e) {
   e.preventDefault();
   const target = e.target;
-  const name = target.querySelector('#name').value;
-  await my_project_backend.greet(name).then((response) => {
-    greeting.value = response;
-  });
+  const newMsg = target.querySelector('#msg').value;
+  target.querySelector("#msg").value = "";
+  await my_project_backend.send_msg(newMsg);
+  await getMsg();
 }
+
+async function getMsg() {
+  chat.value = await my_project_backend.get_all();
+}
+getMsg();
 </script>
 
 <template>
   <main>
-    <img src="/logo2.svg" alt="DFINITY logo" />
-    <br />
-    <br />
+    <section id="chat">
+      <div v-for="msg in chat">
+        {{ msg }} 
+      </div>
+    </section>
     <form action="#" @submit="handleSubmit">
-      <label for="name">Enter your name: &nbsp;</label>
-      <input id="name" alt="Name" type="text" />
-      <button type="submit">Click Me!</button>
+      <input id="msg" type="text" />
+      <button type="submit">Send</button>
     </form>
-    <section id="greeting">{{ greeting }}</section>
   </main>
 </template>

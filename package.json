@@ -14,5 +14,8 @@
   "type": "module",
   "workspaces": [
     "src/my_project_frontend"
-  ]
+  ],
+  "dependencies": {
+    "vue": "^3.5.13"
+  }
 }

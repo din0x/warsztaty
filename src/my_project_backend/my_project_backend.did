@@ -1,3 +1,4 @@
 service : {
-    "greet": (text) -> (text) query;
+    "send_msg": (text) -> ();
+    "get_all": () -> (vec text) query;
 }
